@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // importamos ref que nos permitira crear variables reactivas
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 // tipo personalizado para los dias hábiles de la semana
 type DiaLaboral = 'Lunes' | 'Martes' | 'Miércoles' | 'Jueves' | 'Viernes';
@@ -11,6 +11,28 @@ const dias: DiaLaboral[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'
 // creamos una variable reactiva que contendra el día seleccionado cuando toquemos el boton del día
 // aseguramos que esta variable solo reciba elementos del tipo DiaLaboral (por ejemplo: ref<DiaLaboral>('Lunes'))
 const diaSeleccionado = ref<DiaLaboral>('Lunes');
+
+// creamos una variable para asignar al input
+const dniInput = ref<string>('')
+
+// Lógica de negocio: Mapeo de terminación de DNI por día
+const cronograma: Record<DiaLaboral, string[]> = {
+  'Lunes': ['0', '1'],
+  'Martes': ['2', '3'],
+  'Miércoles': ['4', '5'],
+  'Jueves': ['6', '7'],
+  'Viernes': ['8', '9']
+}
+
+// Propiedad computada para verificar si le toca cobrar
+const correspondeCobro = computed(() => {
+  if (dniInput.value.length === 0) return null
+
+  const ultimoDigito = dniInput.value.slice(-1)
+  const digitosDelDia = cronograma[diaSeleccionado.value]
+
+  return digitosDelDia.includes(ultimoDigito)
+})
 
 // funcion seleccionar día nos ayuda a cambiar la variable reactiva dependiendo la interaccion del usuario
 const seleccionarDia = (dia: DiaLaboral): void => {
@@ -35,6 +57,18 @@ const seleccionarDia = (dia: DiaLaboral): void => {
         {{ dia }}
       </button>
     </div>
+
+    <div class="w-full max-w-md bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mt-6">
+      <label class="block text-sm font-semibold text-slate-700 mb-2">Ingrese su DNI</label>
+      <input v-model="dniInput" type="text" placeholder="Ej: 40123456" maxlength="8"
+        class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all" />
+    </div>
+
+    <div v-if="dniInput" class="mt-6">
+      <p v-if="correspondeCobro" class="text-green-600 font-bold text-lg">¡Hoy te corresponde el pago!</p>
+      <p v-else class="text-red-500">Hoy no es tu turno de cobro.</p>
+    </div>
+
   </div>
 </template>
 
