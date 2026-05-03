@@ -28,6 +28,10 @@ const seleccionarDia = (dia: DiaLaboral): void => {
 
 // bien en el padre ya no funciona la funcionalidad de cambiar dias! vamos a hacer que el hijo le diga que dia esta seleccionado!
 
+// genial ahora el padre cambia su dia de acuerdo al dia que elije el hijo! pero ya no puede cambiar el dia el padre. 
+
+// Listo es hora de borrar el fragmento de codigo del padre!
+
 </script>
 
 <template>
