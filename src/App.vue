@@ -2,6 +2,7 @@
 // importamos ref que nos permitira crear variables reactivas
 import { computed, ref } from 'vue';
 import ListOfDays from './components/ListOfDays.vue';
+import DNIInput from './components/DNIInput.vue';
 
 // tipo personalizado para los dias hábiles de la semana
 type DiaLaboral = 'Lunes' | 'Martes' | 'Miércoles' | 'Jueves' | 'Viernes';
@@ -38,7 +39,12 @@ const correspondeCobro = computed(() => {
 // funcion seleccionar día nos ayuda a cambiar la variable reactiva dependiendo la interaccion del usuario
 const seleccionarDia = (dia: DiaLaboral): void => {
   diaSeleccionado.value = dia // IMPORTANTE: para acceder o cambiar el valor de la variable reactiva debemos usar .value
+  
 }
+const  actualizarInput = (dni: string): void => {
+  dniInput.value = dni
+}
+
 
 </script>
 
@@ -46,15 +52,12 @@ const seleccionarDia = (dia: DiaLaboral): void => {
 
   <div class="min-h-screen bg-slate-50 p-8 flex flex-col items-center">
     <h1 class="text-3xl font-extrabold text-slate-800 mb-8">Gestor de Pagos</h1>
-    
-    <!-- importamos el componente ListOfDays.vue -->
-    <ListOfDays/>
 
-    <div class="w-full max-w-md bg-white p-6 rounded-2xl shadow-sm border border-slate-200 mt-6">
-      <label class="block text-sm font-semibold text-slate-700 mb-2">Ingrese su DNI</label>
-      <input v-model="dniInput" type="text" placeholder="Ej: 40123456" maxlength="8"
-        class="w-full p-3 border border-slate-300 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all" />
-    </div>
+    <!-- importamos el componente ListOfDays.vue -->
+    <ListOfDays @nuevo-dia-seleccionado="seleccionarDia"/>
+
+    <!-- importamos el componente DNIInput -->
+    <DNIInput @cambio-deinput="actualizarInput"/>
 
     <div v-if="dniInput" class="mt-6">
       <p v-if="correspondeCobro" class="text-green-600 font-bold text-lg">¡Hoy te corresponde el pago!</p>

@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+const emit = defineEmits<{
+    (e: "nuevoDiaSeleccionado", dia: DiaLaboral) : void
+}>();
+
 type DiaLaboral = 'Lunes' | 'Martes' | 'Miércoles' | 'Jueves' | 'Viernes';
 
 const dias: DiaLaboral[] = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
@@ -9,6 +13,7 @@ const diaSeleccionado = ref<DiaLaboral>('Lunes');
 
 const seleccionarDia = (dia: DiaLaboral): void => {
   diaSeleccionado.value = dia
+  emit('nuevoDiaSeleccionado', dia);
 }
 
 </script>
