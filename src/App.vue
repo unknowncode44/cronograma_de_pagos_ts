@@ -3,6 +3,7 @@
 import { computed, ref } from 'vue';
 import ListOfDays from './components/ListOfDays.vue';
 import DNIInput from './components/DNIInput.vue';
+import CorrespondeCobro from './components/CorrespondeCobro.vue';
 
 // tipo personalizado para los dias hábiles de la semana
 type DiaLaboral = 'Lunes' | 'Martes' | 'Miércoles' | 'Jueves' | 'Viernes';
@@ -56,13 +57,14 @@ const  actualizarInput = (dni: string): void => {
     <!-- importamos el componente ListOfDays.vue -->
     <ListOfDays @nuevo-dia-seleccionado="seleccionarDia"/>
 
-    <!-- importamos el componente DNIInput -->
+    <!-- 4️⃣ escuchamos el evento y asignamos la funcion actualizar input -->
     <DNIInput @cambio-deinput="actualizarInput"/>
 
-    <div v-if="dniInput" class="mt-6">
-      <p v-if="correspondeCobro" class="text-green-600 font-bold text-lg">¡Hoy te corresponde el pago!</p>
-      <p v-else class="text-red-500">Hoy no es tu turno de cobro.</p>
-    </div>
+    <!-- 4️⃣ importamos corresponde cobro y le pasamos los props -->
+    <CorrespondeCobro
+    :dni-input="dniInput"
+    :corresponde-cobro="correspondeCobro" 
+    />
 
   </div>
 </template>

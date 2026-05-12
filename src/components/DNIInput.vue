@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
+// 1️⃣ definimos el evento usando define emits
 const emit =  defineEmits<{
+    // 2️⃣ declaramos el evento asignandole un nombre y 
+    // definiendo carga util
     (e: 'cambioDeinput', dni: string) : void
 }>();
 
 const dniInput = ref<string>('')
 
+// 3️⃣ ejecutamos el evento para que lo escuche el padre
 const cambiosDetectados = () => {
     emit('cambioDeinput', dniInput.value)
 }
