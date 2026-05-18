@@ -25,6 +25,10 @@ const menuItems: MenuItem[] = [
 </script>
 
 <template>
+
+  <RouterLink to="users" >Ir a Usuarios</RouterLink>
+
+
     <div class="flex-1 px-3 py-4 space-y-2 overflow-y-auto">
         <RouterLink 
         v-for="item in menuItems" 

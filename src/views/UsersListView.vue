@@ -2,8 +2,8 @@
 
 </script>
 <template>
-    <div>
-        Users
+    <div class="flex w-full h-full justify-center items-center">
+        <h1 class="text-8xl text-zinc-900">Users</h1>
     </div>
 </template>
 
